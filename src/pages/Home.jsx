@@ -1,33 +1,21 @@
 import { useState } from 'react';
 import { searchForShows, searchForPeople } from '../api/apiGet';
+import SearchForm from '../component/SearchForm';
 
 const Home = () => {
-  const [searchStr, setSearchStr] = useState('');
   const [apiData, setApiData] = useState(null);
   const [apiDataError, setapiDataError] = useState(null);
-  const [searchOption, setSearchOption] = useState('shows');
-
-  const onRadioChange = ev => {
-    setSearchOption(ev.target.value);
-  };
-
-  const onSearchInputChange = ev => {
-    setSearchStr(ev.target.value);
-  };
-
-  const onSearch = async ev => {
-    ev.preventDefault();
+  const onSearch = async ({ q, searchOption }) => {
     try {
       setapiDataError(null);
+
+      let result;
       if (searchOption === 'shows') {
-        const result = await searchForShows(searchStr);
-        console.log(result);
-        setApiData(result);
+        result = await searchForShows(q);
       } else {
-        const result = await searchForPeople(searchStr);
-        console.log(result);
-        setApiData(result);
+        result = await searchForPeople(q);
       }
+      setApiData(result);
     } catch (error) {
       setapiDataError(error);
     }
@@ -48,31 +36,7 @@ const Home = () => {
   };
   return (
     <div>
-      <form onSubmit={onSearch}>
-        <input type="text" value={searchStr} onChange={onSearchInputChange} />
-        <label>
-          Shows
-          <input
-            type="radio"
-            name="searchOption"
-            value="shows"
-            checked={searchOption === 'shows'}
-            onChange={onRadioChange}
-          />
-        </label>
-        <label>
-          Actors
-          <input
-            type="radio"
-            name="searchOption"
-            value="actors"
-            checked={searchOption === 'actors'}
-            onChange={onRadioChange}
-          />
-        </label>
-
-        <button type="submit">Search</button>
-      </form>
+      <SearchForm onSearch={onSearch}></SearchForm>
       {renderApiData()}
     </div>
   );
