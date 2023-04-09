@@ -1,7 +1,7 @@
 export default function Apptitle(props) {
   const {
     title = 'box-office',
-    subTitle = 'are you looking for movie or actor',
+    subTitle = 'Are you looking for movie or actor',
   } = props;
   return (
     <div>
