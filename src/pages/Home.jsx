@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { searchForShows, searchForPeople } from '../api/apiGet';
 import SearchForm from '../component/SearchForm';
+import ShowsGrid from '../component/shows/ShowsGrid';
+import ActorsGrid from '../component/actors/ActorsGrid';
 
 const Home = () => {
   const [apiData, setApiData] = useState(null);
@@ -24,13 +26,17 @@ const Home = () => {
     if (apiDataError) {
       return <div>Error occured: {apiDataError.message}</div>;
     }
+    //if apidata length is 0 not null
+    if (apiData?.length === 0) {
+      return <div>No result</div>;
+    }
 
     if (apiData) {
-      return apiData[0].show
-        ? apiData.map(data => <div key={data.show.id}>{data.show.name}</div>)
-        : apiData.map(data => (
-            <div key={data.person.id}>{data.person.name}</div>
-          ));
+      return apiData[0].show ? (
+        <ShowsGrid shows={apiData}></ShowsGrid>
+      ) : (
+        <ActorsGrid actors={apiData}></ActorsGrid>
+      );
     }
     return null;
   };
