@@ -1,31 +1,13 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getShowById } from '../api/apiGet';
-
-//this is custom hook it need only id & return two value
-const useShowById = showId => {
-  const [showData, setShowData] = useState(null);
-  const [showError, setShowError] = useState(null);
-  useEffect(() => {
-    async function getData() {
-      //you can await here
-      try {
-        const data = await getShowById(showId);
-        console.log(data);
-        setShowError(null);
-        setShowData(data);
-      } catch (error) {
-        setShowError(error);
-      }
-    }
-    getData();
-  }, [showId]);
-  return [showData, showError]; //returning a array object
-};
+import { useQuery } from 'react-query';
 
 const Show = () => {
   const { showId } = useParams();
-  const [showData, showError] = useShowById(showId);
+  const { data: showData, error: showError } = useQuery({
+    queryKey: ['show', 'showId'],
+    queryFn: () => getShowById(showId),
+  });
 
   if (showError) {
     return <div>we have an error: {showError.message}</div>;
