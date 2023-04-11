@@ -16,10 +16,6 @@ const Seasons = ({ seasons }) => {
                 Aired: {season.premereDate} - {season.endDate}
               </p>
             </div>
-            <div>
-              Web Channel:{' '}
-              <span style={{ color: 'blue' }}>{season.webChannel.name}</span>
-            </div>
           </div>
         ))}
       </div>
