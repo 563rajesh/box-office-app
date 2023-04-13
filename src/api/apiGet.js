@@ -9,3 +9,8 @@ export const searchForShows = qurey => apiGet(`/search/shows?q=${qurey}`);
 export const searchForPeople = qurey => apiGet(`/search/people?q=${qurey}`);
 export const getShowById = showId =>
   apiGet(`/shows/${showId}?embed[]=seasons&embed[]=cast`);
+
+export const getShowsByIds = async showIds => {
+  const promises = showIds.map(showId => apiGet(`/shows/${showId}`));
+  return Promise.all(promises);
+};

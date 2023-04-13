@@ -3,6 +3,7 @@ import ShowCard from './ShowCard';
 
 const ShowsGrid = ({ shows }) => {
   const [starredShows, dispatchStarred] = useStarredShows();
+
   function onClickStarMe(showId) {
     const isStarred = starredShows.includes(showId);
     if (isStarred) {
