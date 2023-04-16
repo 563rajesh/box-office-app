@@ -4,6 +4,7 @@ import SearchForm from '../component/SearchForm';
 import ShowsGrid from '../component/shows/ShowsGrid';
 import ActorsGrid from '../component/actors/ActorsGrid';
 import { useQuery } from 'react-query';
+import { TextCenter } from '../component/common/TextCenter';
 
 const Home = () => {
   const [filter, setFilter] = useState(null);
@@ -37,11 +38,11 @@ const Home = () => {
   };
   const renderApiData = () => {
     if (apiDataError) {
-      return <div>Error occured: {apiDataError.message}</div>;
+      return <TextCenter>Error occured: {apiDataError.message}</TextCenter>;
     }
     //if apidata length is 0 not null
     if (apiData?.length === 0) {
-      return <div>No result</div>;
+      return <TextCenter>No result</TextCenter>;
     }
 
     if (apiData) {

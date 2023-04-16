@@ -2,6 +2,7 @@ import { getShowsByIds } from '../api/apiGet';
 import ShowsGrid from '../component/shows/ShowsGrid';
 import { useStarredShows } from '../lib/useStarredShows';
 import { useQuery } from 'react-query';
+import { TextCenter } from '../component/common/TextCenter';
 
 const Starred = () => {
   const [starredShowsIds] = useStarredShows();
@@ -18,7 +19,7 @@ const Starred = () => {
 
   //check everything here
   if (starredShows?.length === 0) {
-    return <div>No shows were starred</div>;
+    return <TextCenter>No shows were starred</TextCenter>;
   }
   if (starredShows?.length > 0) {
     return <ShowsGrid shows={starredShows}></ShowsGrid>;
@@ -26,7 +27,7 @@ const Starred = () => {
   if (starredShowsError) {
     return <div>Error occured: {starredShows.message}</div>;
   }
-  return <div>Starred is loading</div>;
+  return <TextCenter>Starred is loading</TextCenter>;
 };
 
 export default Starred;
