@@ -1,11 +1,24 @@
 import styled from 'styled-components';
 import { SearchCard, SearchImgWrapper } from '../common/SearchCard';
 import { StarIcon } from '../common/StarIcon';
+import { useRef } from 'react';
 
 const ShowCard = ({ name, image, id, summary, onClickStarMe, isStarred }) => {
   const summaryStripped = summary
     ? summary.split(' ').slice(0, 10).join(' ').replace(/<.+?>/g, '') + '...'
     : 'no description';
+  const starBtnRef = useRef();
+  const handleStarMeClick = () => {
+    onClickStarMe(id);
+    const starBtnEl = starBtnRef.current;
+    if (!starBtnEl) return;
+    if (isStarred) {
+      starBtnEl.classList.remove('animate');
+    } else {
+      starBtnEl.classList.add('animate');
+    }
+  };
+
   return (
     <SearchCard>
       <SearchImgWrapper>
@@ -17,7 +30,12 @@ const ShowCard = ({ name, image, id, summary, onClickStarMe, isStarred }) => {
         <a href={`/show/${id}`} target="_blank" rel="noreferrer">
           Read more
         </a>
-        <StarBtn type="button" onClick={() => onClickStarMe(id)}>
+        <StarBtn
+          ref={starBtnRef}
+          type="button"
+          onClick={handleStarMeClick}
+          // className={isStarred && 'animate'}
+        >
           {/* {isStarred ? 'Unstar me' : 'Star me'} */}
           <StarIcon active={isStarred}></StarIcon>
         </StarBtn>
@@ -54,5 +72,21 @@ const StarBtn = styled.button`
   align-items: center;
   &:hover {
     cursor: pointer;
+  }
+  &.animate {
+    ${StarIcon} {
+      animation: increase 0.75s ease-in forwards;
+      @keyframes increase {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(3) rotate(45deg);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    }
   }
 `;
