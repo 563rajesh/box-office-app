@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { SearchCard, SearchImgWrapper } from '../common/SearchCard';
 import { StarIcon } from '../common/StarIcon';
 import { useRef } from 'react';
+import { Link } from 'react-router-dom';
 
 const ShowCard = ({ name, image, id, summary, onClickStarMe, isStarred }) => {
   const summaryStripped = summary
@@ -11,6 +12,7 @@ const ShowCard = ({ name, image, id, summary, onClickStarMe, isStarred }) => {
   const handleStarMeClick = () => {
     onClickStarMe(id);
     const starBtnEl = starBtnRef.current;
+    //this is called the imperative way
     if (!starBtnEl) return;
     if (isStarred) {
       starBtnEl.classList.remove('animate');
@@ -27,9 +29,9 @@ const ShowCard = ({ name, image, id, summary, onClickStarMe, isStarred }) => {
       <h1>{name}</h1>
       <p>{summaryStripped}</p>
       <ActionSection>
-        <a href={`/show/${id}`} target="_blank" rel="noreferrer">
+        <Link to={`/show/${id}`} target="_blank" rel="noreferrer">
           Read more
-        </a>
+        </Link>
         <StarBtn
           ref={starBtnRef}
           type="button"
