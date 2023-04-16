@@ -18,6 +18,7 @@ const Home = () => {
     enabled: !!filter,
     refetchOnWindowFocus: false,
   });
+
   const onSearch = async ({ q, searchOption }) => {
     setFilter({ q, searchOption });
     // try {

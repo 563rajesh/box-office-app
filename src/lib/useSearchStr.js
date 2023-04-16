@@ -11,7 +11,7 @@ const usePersistedSearch = (initialState, sessionStorageKey) => {
   }, [state, sessionStorageKey]);
   return [state, setState];
 };
-
+//why call inside the function
 export const useSearchStr = () => {
   return usePersistedSearch('', 'SearchString');
 };
